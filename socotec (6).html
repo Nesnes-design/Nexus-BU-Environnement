@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Nexus — Socotec BU Environnement</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,300;0,700;1,300;1,600&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0a1628;--blue:#0d2d6b;--mid:#1a4db8;--accent:#2563eb;--sky:#60a5fa;--ice:#dbeafe;--white:#ffffff;--offwhite:#f8faff;--gray:#64748b;--light:#e2e8f0;--green:#059669;--greenl:#d1fae5;--gold:#f59e0b;--r:16px;--rs:10px;--t:.3s cubic-bezier(.4,0,.2,1);--shadow:0 4px 24px rgba(13,45,107,.12);--shadow-lg:0 12px 48px rgba(13,45,107,.18)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--offwhite);color:var(--navy);overflow-x:hidden;cursor:none}
+a{text-decoration:none;color:inherit}
+::selection{background:var(--accent);color:#fff}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--offwhite)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--accent),var(--sky));border-radius:3px}
+#cur{position:fixed;top:0;left:0;width:20px;height:20px;background:#f59e0b;border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);box-shadow:0 0 20px #f59e0b,0 0 40px rgba(245,158,11,.5);transition:width .12s,height .12s,box-shadow .12s}
+#curRing{position:fixed;top:0;left:0;width:52px;height:52px;border:2px solid rgba(245,158,11,.75);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .1s,height .1s}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:0 56px;height:70px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(13,45,107,.08);box-shadow:0 2px 20px rgba(13,45,107,.06)}
+.nav-brand{display:flex;align-items:center;gap:14px}
+.nav-sep{width:1px;height:28px;background:var(--light);flex-shrink:0}
+.nav-name{font-size:1.15rem;font-weight:800;color:var(--navy);letter-spacing:-.5px}
+.nav-name span{color:var(--accent)}
+.nav-sub{font-size:.65rem;color:var(--gray);font-weight:500;letter-spacing:.5px;display:block;margin-top:-2px}
+.nav-links{display:flex;gap:4px;list-style:none;align-items:center}
+.nav-links a{font-size:.82rem;font-weight:500;color:var(--gray);padding:7px 14px;border-radius:8px;transition:all var(--t)}
+.nav-links a:hover{color:var(--accent);background:var(--ice)}
+.nav-cta{background:linear-gradient(135deg,var(--accent),var(--mid))!important;color:#fff!important;padding:8px 20px!important;border-radius:50px!important;font-weight:600!important;box-shadow:0 4px 14px rgba(37,99,235,.3)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:4px}
+.burger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px}
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:100px 56px 80px;background:linear-gradient(145deg,var(--navy) 0%,var(--blue) 50%,#0f3d8c 100%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none}
+.hero-glow1{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,.35) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.hero-glow2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(96,165,250,.2) 0%,transparent 70%);bottom:-50px;left:200px;pointer-events:none}
+.hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--sky);font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:50px;margin-bottom:28px}
+.hero-badge::before{content:'';width:7px;height:7px;background:var(--sky);border-radius:50%;animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:700;line-height:.95;letter-spacing:-2px;color:#fff;margin-bottom:28px}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--sky)}
+.hero-desc{font-size:1.05rem;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:44px;max-width:480px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#3b82f6);color:#fff;padding:14px 32px;border-radius:50px;font-size:.9rem;font-weight:700;box-shadow:0 6px 24px rgba(37,99,235,.4);transition:all var(--t)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(37,99,235,.5)}
+.btn-outline{border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:13px 30px;border-radius:50px;font-size:.9rem;font-weight:600;transition:all var(--t)}
+.btn-outline:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.hero-right{display:flex;flex-direction:column;gap:16px}
+.hcard{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(16px);border-radius:var(--r);padding:24px 28px;display:flex;align-items:center;gap:20px;transition:all var(--t)}
+.hcard:hover{background:rgba(255,255,255,.13);transform:translateX(6px)}
+.hcard-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.hi1{background:linear-gradient(135deg,rgba(37,99,235,.4),rgba(96,165,250,.3))}.hi2{background:linear-gradient(135deg,rgba(5,150,105,.4),rgba(52,211,153,.3))}.hi3{background:linear-gradient(135deg,rgba(245,158,11,.4),rgba(252,211,77,.3))}.hi4{background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(196,181,253,.3))}
+.hcard-text h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:3px}
+.hcard-text p{font-size:.8rem;color:rgba(255,255,255,.55)}
+.scroll-ind{position:absolute;bottom:36px;left:56px;display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.35);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;z-index:2}
+.scroll-line{width:40px;height:1px;background:rgba(255,255,255,.25)}
+section{padding:100px 56px}
+.container{max-width:1100px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--accent);border-radius:2px}
+.stitle{font-family:'Fraunces',serif;font-size:clamp(2.4rem,4vw,3.8rem);font-weight:700;letter-spacing:-1.5px;line-height:1;margin-bottom:18px;color:var(--navy)}
+.stitle em{font-style:italic;font-weight:300;color:var(--accent)}
+.sbody{font-size:.98rem;color:var(--gray);max-width:560px;line-height:1.8;margin-bottom:56px}
+.s-about{background:var(--white)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-big-card{background:linear-gradient(145deg,var(--navy),var(--blue));border-radius:24px;padding:48px 40px;color:#fff;position:relative;overflow:hidden;margin-bottom:14px}
+.about-big-card::before{content:'';position:absolute;right:-20px;bottom:-20px;font-size:10rem;opacity:.07}
+.about-big-card h3{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;margin-bottom:12px}
+.about-big-card p{font-size:.9rem;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:28px}
+.about-tags{display:flex;gap:8px;flex-wrap:wrap}
+.atag{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.8);padding:5px 14px;border-radius:50px;font-size:.74rem;font-weight:600}
+.about-small-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.asc{background:var(--offwhite);border:1px solid var(--light);border-radius:var(--r);padding:20px;transition:all var(--t)}
+.asc:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+.asc-icon{font-size:1.8rem;margin-bottom:10px;display:block}
+.asc h4{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:5px}
+.asc p{font-size:.78rem;color:var(--gray);line-height:1.6}
+.val-list{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.val-list li{display:flex;align-items:flex-start;gap:14px;font-size:.9rem;color:var(--gray);line-height:1.65}
+.val-dot{min-width:8px;height:8px;background:linear-gradient(135deg,var(--accent),var(--sky));border-radius:50%;margin-top:7px;flex-shrink:0}
+.s-events{background:var(--offwhite)}
+.events-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.evcard{background:var(--white);border:1px solid var(--light);border-radius:20px;overflow:hidden;transition:all var(--t)}
+.evcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--sky)}
+.evcard-top{height:130px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative}
+.et1{background:linear-gradient(135deg,#dbeafe,#bfdbfe)}.et2{background:linear-gradient(135deg,#d1fae5,#a7f3d0)}.et3{background:linear-gradient(135deg,#fef3c7,#fde68a)}.et4{background:linear-gradient(135deg,#ede9fe,#ddd6fe)}.et5{background:linear-gradient(135deg,#fee2e2,#fecaca)}.et6{background:linear-gradient(135deg,#e0f2fe,#bae6fd)}
+.evcard-badge{position:absolute;top:12px;right:12px;font-size:.65rem;font-weight:700;padding:4px 10px;border-radius:50px;text-transform:uppercase}
+.eb-new{background:var(--green);color:#fff}.eb-soon{background:var(--gold);color:#fff}.eb-reg{background:var(--accent);color:#fff}
+.evcard-body{padding:24px}
+.ev-cat{font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.evcard h3{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.evcard p{font-size:.83rem;color:var(--gray);line-height:1.65;margin-bottom:16px}
+.ev-meta{display:flex;gap:12px;font-size:.75rem;color:var(--gray);margin-bottom:18px;flex-wrap:wrap}
+.ev-btn{display:block;text-align:center;background:linear-gradient(135deg,var(--accent),var(--mid));color:#fff;padding:10px;border-radius:var(--rs);font-size:.8rem;font-weight:700;transition:all var(--t)}
+.ev-btn:hover{box-shadow:0 4px 16px rgba(37,99,235,.35);transform:translateY(-1px)}
+.s-transfo{background:var(--white)}
+.pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:60px}
+.pillar{border-radius:20px;padding:32px;position:relative;overflow:hidden;transition:transform var(--t)}
+.pillar:hover{transform:translateY(-4px)}
+.p1{background:linear-gradient(145deg,var(--navy),var(--blue))}.p2{background:linear-gradient(145deg,#064e3b,#059669)}.p3{background:linear-gradient(145deg,#1e3a5f,#1a4db8)}.p4{background:linear-gradient(145deg,#3730a3,#6366f1)}
+.pillar-num{font-family:'Fraunces',serif;font-size:4rem;font-weight:700;opacity:.12;position:absolute;top:-8px;right:16px;color:#fff}
+.pillar-icon{font-size:2rem;display:block;margin-bottom:14px}
+.pillar h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:8px}
+.pillar p{font-size:.82rem;color:rgba(255,255,255,.6);line-height:1.7}
+.timeline{display:flex;flex-direction:column;gap:0;max-width:500px}
+.tl-item{display:flex;gap:20px;padding-bottom:32px;position:relative}
+.tl-item:not(:last-child)::before{content:'';position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--light)}
+.tl-dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:3px solid var(--white);box-shadow:0 0 0 2px var(--accent)}
+.td1{background:var(--accent)}.td2{background:var(--green)}.td3{background:var(--gold)}.td4{background:#8b5cf6}
+.tl-content h4{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+.tl-content p{font-size:.82rem;color:var(--gray);line-height:1.65}
+.tdate{font-size:.7rem;color:var(--accent);font-weight:600;margin-bottom:5px;text-transform:uppercase;letter-spacing:1px}
+.s-ressources{background:var(--offwhite)}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.rcard{background:var(--white);border:1px solid var(--light);border-radius:var(--r);padding:28px;transition:all var(--t)}
+.rcard:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-3px)}
+.rcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.rcard-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.ri1{background:var(--ice)}.ri2{background:var(--greenl)}.ri3{background:#fef3c7}.ri4{background:#ede9fe}.ri5{background:#fee2e2}.ri6{background:#e0f2fe}
+.rtag{font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:50px}
+.rt-blue{background:var(--ice);color:var(--accent)}.rt-green{background:var(--greenl);color:var(--green)}.rt-gold{background:#fef3c7;color:#b45309}
+.rcard h4{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:7px}
+.rcard p{font-size:.82rem;color:var(--gray);line-height:1.65;margin-bottom:16px}
+.rcard-link{font-size:.76rem;font-weight:700;color:var(--accent);display:inline-flex;align-items:center;gap:6px;transition:gap var(--t)}
+.rcard-link:hover{gap:10px}
+.s-faq{background:var(--white)}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.faq-item{border:1.5px solid var(--light);border-radius:var(--r);overflow:hidden;transition:border-color var(--t)}
+.faq-item.open{border-color:var(--accent)}
+.faq-q{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:none;gap:16px;transition:background var(--t)}
+.faq-q:hover{background:var(--offwhite)}
+.faq-item.open .faq-q{background:var(--ice)}
+.faq-q span{font-size:.9rem;font-weight:600;color:var(--navy)}
+.faq-arrow{width:28px;height:28px;background:var(--light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--gray);flex-shrink:0;transition:all var(--t)}
+.faq-item.open .faq-arrow{background:var(--accent);color:#fff;transform:rotate(180deg)}
+.faq-a{display:none;padding:0 24px 20px;font-size:.86rem;color:var(--gray);line-height:1.75}
+.faq-item.open .faq-a{display:block}
+.s-contact{background:linear-gradient(145deg,var(--navy),var(--blue));position:relative;overflow:hidden}
+.s-contact::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:50px 50px}
+.contact-grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:start}
+.contact-left .eyebrow{color:var(--sky)}
+.contact-left .stitle{color:#fff}
+.contact-left .stitle em{color:var(--sky)}
+.contact-left>p{font-size:.95rem;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:36px}
+.contact-infos{display:flex;flex-direction:column;gap:16px}
+.ci{display:flex;align-items:center;gap:14px;padding:16px 20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);transition:all var(--t)}
+.ci:hover{background:rgba(255,255,255,.11);transform:translateX(4px)}
+.ci-icon{width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.ci-text span{display:block;font-size:.7rem;color:rgba(255,255,255,.4);font-weight:500;margin-bottom:2px;text-transform:uppercase;letter-spacing:1px}
+.ci-text strong{font-size:.88rem;color:#fff;font-weight:600}
+.contact-form{background:var(--white);border-radius:24px;padding:44px}
+.form-title{font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+.form-sub{font-size:.84rem;color:var(--gray);margin-bottom:20px}
+footer{background:var(--navy);padding:60px 56px 28px}
+.foot-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px}
+.flogo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.flogo-box{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--sky));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.foot-brand p{font-size:.83rem;color:rgba(255,255,255,.35);line-height:1.75;max-width:260px}
+.foot-col h4{font-size:.68rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:16px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.foot-col li a{font-size:.83rem;color:rgba(255,255,255,.42);transition:color var(--t)}
+.foot-col li a:hover{color:var(--sky)}
+.foot-col p{font-size:.83rem;color:rgba(255,255,255,.38);margin-bottom:6px}
+.fbot{max-width:1100px;margin:0 auto;padding-top:24px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;font-size:.74rem;color:rgba(255,255,255,.2)}
+.socotec-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:5px 14px;border-radius:50px;font-size:.72rem;color:rgba(255,255,255,.4)}
+@media(max-width:1024px){.hero-inner,.about-grid,.contact-grid{grid-template-columns:1fr}.events-grid,.res-grid,.pillars,.faq-grid{grid-template-columns:1fr 1fr}.foot-grid{grid-template-columns:1fr 1fr}.foot-brand{grid-column:1/-1}}
+@media(max-width:768px){nav{padding:0 22px}.nav-links{display:none;position:fixed;top:70px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px;gap:4px;border-bottom:1px solid var(--light);box-shadow:var(--shadow)}.nav-links.open{display:flex}.nav-links a{padding:11px 14px;width:100%}.burger{display:flex}section{padding:72px 22px}.hero{padding:90px 22px 60px}.hero-right,.scroll-ind{display:none}.events-grid,.res-grid,.pillars,.faq-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}.about-small-cards{grid-template-columns:1fr}.fbot{flex-direction:column;gap:10px;text-align:center}}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="curRing"></div>
+<nav id="nav">
+  <div class="nav-brand">
+    <img src="https://www.socotec.com/sites/default/files/logo_socotec_2022.png" alt="Socotec" style="height:34px;object-fit:contain" onerror="this.style.display='none'"/>
+    <div class="nav-sep"></div>
+    <div><span class="nav-name">Nexus<span>.</span></span><span class="nav-sub">BU Environnement</span></div>
+  </div>
+  <button class="burger" id="burger"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="nl">
+    <li><a href="#about">La cellule</a></li><li><a href="#events">Evenements</a></li><li><a href="#transfo">Transformation</a></li><li><a href="#ressources">Ressources</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact" class="nav-cta">Nous ecrire</a></li>
+  </ul>
+</nav>
+<section class="hero" id="top">
+  <div class="hero-grid"></div><div class="hero-glow1"></div><div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">Cellule Transformation Digitale</div>
+      <h1>Transformons <em>ensemble</em> notre facon de travailler</h1>
+      <p class="hero-desc">Nexus est l espace collaboratif de la BU Environnement Socotec dedie aux echanges, a l innovation et a la transformation digitale et IA de nos pratiques metier.</p>
+      <div class="hero-btns"><a href="#events" class="btn-primary">Voir les evenements</a><a href="#contact" class="btn-outline">Contacter la cellule</a></div>
+    </div>
+    <div class="hero-right">
+      <div class="hcard"><div class="hcard-icon hi1">&#129302;</div><div class="hcard-text"><h3>IA &amp; Metier</h3><p>Ateliers mensuels autour de l IA appliquee a l environnement</p></div></div>
+      <div class="hcard"><div class="hcard-icon hi2">&#127757;</div><div class="hcard-text"><h3>Green &amp; Tech</h3><p>Comment le digital accelere nos missions environnementales</p></div></div>
+      <div class="hcard"><div class="hcard-icon hi3">&#128161;</div><div class="hcard-text"><h3>Partage d experiences</h3><p>Retours terrain, bonnes pratiques, outils adoptes</p></div></div>
+      <div class="hcard"><div class="hcard-icon hi4">&#128279;</div><div class="hcard-text"><h3>Reseau &amp; Connexion</h3><p>Lier expertises metier et digitales au sein de la BU</p></div></div>
+    </div>
+  </div>
+  <div class="scroll-ind"><div class="scroll-line"></div>Defiler pour explorer</div>
+</section>
+
+<section class="s-about" id="about">
+  <div class="container"><div class="about-grid">
+    <div>
+      <div class="about-big-card"><h3>La cellule Transformation</h3><p>Une equipe dediee au sein de la BU Environnement Socotec, dont la mission est d accompagner les collaborateurs dans l adoption des outils digitaux et des nouvelles pratiques de travail.</p><div class="about-tags"><span class="atag">Environnement</span><span class="atag">Digital</span><span class="atag">IA</span><span class="atag">Transformation</span></div></div>
+      <div class="about-small-cards">
+        <div class="asc"><span class="asc-icon">&#127919;</span><h4>Notre mission</h4><p>Accelerer l adoption du digital dans les pratiques metier environnement</p></div>
+        <div class="asc"><span class="asc-icon">&#129309;</span><h4>Notre approche</h4><p>Echanges conviviaux, ateliers pratiques, partage horizontal entre pairs</p></div>
+        <div class="asc"><span class="asc-icon">&#128202;</span><h4>En chiffres</h4><p>+120 collaborateurs accompagnes, 24 ateliers organises en 2024</p></div>
+        <div class="asc"><span class="asc-icon">&#128197;</span><h4>Rythme</h4><p>1 evenement mensuel minimum, ressources mises a jour en continu</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow">Qui sommes-nous</div>
+      <h2 class="stitle">Une cellule a votre <em>service</em></h2>
+      <ul class="val-list">
+        <li><div class="val-dot"></div>Accompagner chaque collaborateur dans sa montee en competences digitales, a son rythme et selon ses besoins metier.</li>
+        <li><div class="val-dot"></div>Creer des espaces d echanges conviviaux ou les idees et experiences circulent librement entre equipes.</li>
+        <li><div class="val-dot"></div>Faire le lien entre les enjeux environnementaux de Socotec et les opportunites offertes par les nouvelles technologies.</li>
+        <li><div class="val-dot"></div>Identifier et partager les outils IA pertinents pour les missions terrain et bureau de la BU Environnement.</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="display:inline-block">Rejoindre la communaute</a>
+    </div>
+  </div></div>
+</section>
+
+<section class="s-events" id="events">
+  <div class="container">
+    <div class="eyebrow">Agenda</div><h2 class="stitle">Nos <em>evenements</em></h2><p class="sbody">Des rendez-vous reguliers pour echanger, apprendre et partager.</p>
+    <div class="events-grid">
+      <div class="evcard"><div class="evcard-top et1"><span class="evcard-badge eb-soon">Bientot</span>&#129302;</div><div class="evcard-body"><div class="ev-cat">Atelier IA</div><h3>ChatGPT dans nos rapports d expertise</h3><p>Demonstration live et echanges autour des usages concrets de l IA dans la redaction de rapports environnementaux.</p><div class="ev-meta"><span>14 avril 2025</span><span>12h30-14h</span></div><a href="#contact" class="ev-btn">S inscrire</a></div></div>
+      <div class="evcard"><div class="evcard-top et2"><span class="evcard-badge eb-new">Nouveau</span>&#127807;</div><div class="evcard-body"><div class="ev-cat">Green Tech</div><h3>Outils numeriques pour le terrain</h3><p>Decouverte des meilleures applis mobiles et outils SIG pour optimiser les missions de diagnostic environnemental.</p><div class="ev-meta"><span>8 mai 2025</span><span>12h-13h30</span></div><a href="#contact" class="ev-btn">S inscrire</a></div></div>
+      <div class="evcard"><div class="evcard-top et3"><span class="evcard-badge eb-reg">Mensuel</span>&#9749;</div><div class="evcard-body"><div class="ev-cat">Cafe Digital</div><h3>La Minute Digital - Mai</h3><p>Format libre de 45 min : un collegue partage une decouverte digitale, un outil, une astuce autour d un cafe.</p><div class="ev-meta"><span>1er jeudi du mois</span><span>9h-9h45</span></div><a href="#contact" class="ev-btn">S inscrire</a></div></div>
+      <div class="evcard"><div class="evcard-top et4">&#128260;</div><div class="evcard-body"><div class="ev-cat">Retour d experience</div><h3>Comment j ai digitalise mon workflow</h3><p>Temoignages de collaborateurs qui ont transforme leur facon de travailler grace aux outils digitaux.</p><div class="ev-meta"><span>22 mai 2025</span><span>12h30-14h</span></div><a href="#contact" class="ev-btn">S inscrire</a></div></div>
+      <div class="evcard"><div class="evcard-top et5">&#128295;</div><div class="evcard-body"><div class="ev-cat">Workshop</div><h3>Automatiser ses taches repetitives</h3><p>Atelier pratique : Power Automate, macros Excel. Gains de temps concrets pour les equipes environnement.</p><div class="ev-meta"><span>5 juin 2025</span><span>14h-17h</span></div><a href="#contact" class="ev-btn">S inscrire</a></div></div>
+      <div class="evcard"><div class="evcard-top et6">&#128172;</div><div class="evcard-body"><div class="ev-cat">Open Talk</div><h3>Vos idees pour la transformation</h3><p>Session participative pour co-construire la feuille de route digitale de la BU. Vos propositions, vos priorites.</p><div class="ev-meta"><span>19 juin 2025</span><span>14h-16h</span></div><a href="#contact" class="ev-btn">S inscrire</a></div></div>
+    </div>
+  </div>
+</section>
+<section class="s-transfo" id="transfo">
+  <div class="container">
+    <div class="eyebrow">Notre approche</div><h2 class="stitle">Les piliers de notre <em>transformation</em></h2><p class="sbody">Une vision en 4 axes pour accompagner la BU Environnement vers ses objectifs digitaux 2025.</p>
+    <div class="pillars">
+      <div class="pillar p1"><span class="pillar-num">01</span><span class="pillar-icon">&#129302;</span><h3>Intelligence Artificielle</h3><p>Identifier et deployer les outils IA pertinents pour les metiers de l environnement.</p></div>
+      <div class="pillar p2"><span class="pillar-num">02</span><span class="pillar-icon">&#127757;</span><h3>Green Tech</h3><p>Valoriser les technologies numeriques au service des enjeux environnementaux.</p></div>
+      <div class="pillar p3"><span class="pillar-num">03</span><span class="pillar-icon">&#9889;</span><h3>Automatisation</h3><p>Liberer du temps sur les taches repetitives pour recentrer sur la valeur ajoutee.</p></div>
+      <div class="pillar p4"><span class="pillar-num">04</span><span class="pillar-icon">&#129309;</span><h3>Culture &amp; Partage</h3><p>Construire une communaute apprenante ou l experience circule horizontalement.</p></div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot td1">&#10003;</div><div class="tl-content"><div class="tdate">T1 2025 - Termine</div><h4>Lancement de Nexus</h4><p>Creation de la cellule, premiers ateliers, identification des ambassadeurs digitaux.</p></div></div>
+      <div class="tl-item"><div class="tl-dot td2">&#9679;</div><div class="tl-content"><div class="tdate">T2 2025 - En cours</div><h4>Deploiement des outils IA</h4><p>Formation aux outils IA selectionnes pour les metiers environnement.</p></div></div>
+      <div class="tl-item"><div class="tl-dot td3">&#9675;</div><div class="tl-content"><div class="tdate">T3 2025 - Planifie</div><h4>Automatisation des workflows</h4><p>Chantier d automatisation des rapports et processus recurrents.</p></div></div>
+      <div class="tl-item"><div class="tl-dot td4">&#9675;</div><div class="tl-content"><div class="tdate">T4 2025 - Planifie</div><h4>Bilan &amp; feuille de route 2026</h4><p>Mesure de l impact et co-construction du plan de transformation 2026.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="s-ressources" id="ressources">
+  <div class="container">
+    <div class="eyebrow">Veille &amp; outils</div><h2 class="stitle">Nos <em>ressources</em></h2><p class="sbody">Des fiches pratiques, guides et selections d outils pour aller plus loin.</p>
+    <div class="res-grid">
+      <div class="rcard"><div class="rcard-top"><div class="rcard-icon ri1">&#129302;</div><span class="rtag rt-blue">IA</span></div><h4>Guide IA pour debutants</h4><p>Comprendre ChatGPT, Copilot et les outils IA. Exemples concrets pour les metiers environnement.</p><a href="#contact" class="rcard-link">Acceder au guide &#8594;</a></div>
+      <div class="rcard"><div class="rcard-top"><div class="rcard-icon ri2">&#127807;</div><span class="rtag rt-green">Green Tech</span></div><h4>Top 10 outils terrain 2025</h4><p>Selection des meilleures applis mobiles et outils SIG pour les diagnostics environnementaux.</p><a href="#contact" class="rcard-link">Voir la selection &#8594;</a></div>
+      <div class="rcard"><div class="rcard-top"><div class="rcard-icon ri3">&#9889;</div><span class="rtag rt-gold">Automatisation</span></div><h4>Power Automate - Demarrer</h4><p>Tutoriel pas a pas pour creer vos premiers flux automatises dans l environnement Microsoft 365.</p><a href="#contact" class="rcard-link">Voir le tutoriel &#8594;</a></div>
+      <div class="rcard"><div class="rcard-top"><div class="rcard-icon ri4">&#128202;</div><span class="rtag rt-blue">Data</span></div><h4>Power BI pour les equipes env.</h4><p>Creer des tableaux de bord visuels pour vos donnees de terrain. Formation replay disponible.</p><a href="#contact" class="rcard-link">Acceder au replay &#8594;</a></div>
+      <div class="rcard"><div class="rcard-top"><div class="rcard-icon ri5">&#128274;</div><span class="rtag rt-gold">Securite</span></div><h4>Bonnes pratiques cybersecurite</h4><p>Les reflexes essentiels pour proteger vos donnees dans vos usages digitaux quotidiens.</p><a href="#contact" class="rcard-link">Lire le guide &#8594;</a></div>
+      <div class="rcard"><div class="rcard-top"><div class="rcard-icon ri6">&#128172;</div><span class="rtag rt-green">Collaboration</span></div><h4>Teams &amp; SharePoint avance</h4><p>Fonctionnalites meconnues de Teams et SharePoint pour booster la collaboration a distance.</p><a href="#contact" class="rcard-link">Voir les astuces &#8594;</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="s-faq" id="faq">
+  <div class="container">
+    <div class="eyebrow">Questions frequentes</div><h2 class="stitle">Vous avez des <em>questions ?</em></h2><p class="sbody">Tout ce qu il faut savoir sur la cellule Nexus et nos activites.</p>
+    <div class="faq-grid">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>La cellule Nexus c est pour qui ?</span><div class="faq-arrow">&#9660;</div></div><div class="faq-a">Nexus s adresse a tous les collaborateurs de la BU Environnement Socotec, quel que soit votre niveau digital.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Les evenements sont-ils obligatoires ?</span><div class="faq-arrow">&#9660;</div></div><div class="faq-a">Non, tous nos evenements sont bases sur le volontariat. Venez quand le sujet vous parle !</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Puis-je proposer un sujet ou animer un atelier ?</span><div class="faq-arrow">&#9660;</div></div><div class="faq-a">Absolument ! Contactez-nous via le formulaire. La Minute Digital mensuelle est justement pensee pour ca.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Les ressources sont-elles accessibles a tous ?</span><div class="faq-arrow">&#9660;</div></div><div class="faq-a">Oui, toutes les ressources sont disponibles pour l ensemble des collaborateurs de la BU.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Comment rejoindre la communaute Nexus ?</span><div class="faq-arrow">&#9660;</div></div><div class="faq-a">Il suffit de vous inscrire a un evenement ou de nous contacter. Nous vous ajoutons a notre liste de diffusion.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Est-ce que Nexus travaille avec la DSI ?</span><div class="faq-arrow">&#9660;</div></div><div class="faq-a">Oui, nous sommes en lien etroit avec la DSI Socotec pour assurer la coherence des outils deployes.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="s-contact" id="contact">
+  <div class="container"><div class="contact-grid">
+    <div class="contact-left">
+      <div class="eyebrow">Nous contacter</div>
+      <h2 class="stitle">Ecrivez-nous,<br/><em>repondons-vous</em></h2>
+      <p>Une question, une idee, envie de participer ? La cellule Nexus vous repond sous 72h.</p>
+      <div class="contact-infos">
+        <div class="ci"><div class="ci-icon">&#128231;</div><div class="ci-text"><span>Email</span><strong>nexus.bu-env@socotec.com</strong></div></div>
+        <div class="ci"><div class="ci-icon">&#128172;</div><div class="ci-text"><span>Teams</span><strong>Canal Nexus - Transformation BU Env</strong></div></div>
+        <div class="ci"><div class="ci-icon">&#128205;</div><div class="ci-text"><span>Localisation</span><strong>BU Environnement - 1er etage</strong></div></div>
+        <div class="ci"><div class="ci-icon">&#8987;</div><div class="ci-text"><span>Delai de reponse</span><strong>Sous 72h ouverees</strong></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form">
+        <p class="form-title">Envoyez-nous un message</p>
+        <p class="form-sub">Remplissez le formulaire - nous vous repondons sous 72h ouverees.</p>
+        <iframe width="100%" height="640px" src="https://forms.office.com/Pages/ResponsePage.aspx?id=pV8TM6f1XE2GMpoX1Kz6WxITg4p6IitPng8DNHBIPHFURUFJM0FDQTJSTlRUTE43VVNQVjE0WUIwQy4u&embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border:none;width:100%;border-radius:12px" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen></iframe>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand"><div class="flogo"><div class="flogo-box">&#128260;</div>Nexus</div><p>La cellule Transformation Digitale de la BU Environnement Socotec.</p></div>
+    <div class="foot-col"><h4>Navigation</h4><ul><li><a href="#about">La cellule</a></li><li><a href="#events">Evenements</a></li><li><a href="#transfo">Transformation</a></li><li><a href="#ressources">Ressources</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+    <div class="foot-col"><h4>Evenements</h4><ul><li><a href="#events">Ateliers IA</a></li><li><a href="#events">Cafe Digital</a></li><li><a href="#events">Green Tech</a></li><li><a href="#events">Open Talks</a></li></ul></div>
+    <div class="foot-col"><h4>Contact</h4><p>nexus.bu-env@socotec.com</p><p>Teams - Canal Nexus</p><p>Reponse sous 72h</p></div>
+  </div>
+  <div class="fbot"><span>2025 Nexus - BU Environnement Socotec</span><div class="socotec-badge">Socotec Group</div></div>
+</footer>
+
+<script>
+var dot=document.getElementById('cur');
+var ring=document.getElementById('curRing');
+var mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.addEventListener('mouseover',function(e){
+  var el=e.target.closest('a,button,.evcard,.rcard,.hcard,.ci,.asc,.pillar,.faq-q');
+  if(el){dot.style.width='30px';dot.style.height='30px';dot.style.boxShadow='0 0 28px #f59e0b,0 0 56px rgba(245,158,11,.6)';ring.style.width='70px';ring.style.height='70px';}
+  else{dot.style.width='20px';dot.style.height='20px';dot.style.boxShadow='0 0 20px #f59e0b,0 0 40px rgba(245,158,11,.5)';ring.style.width='52px';ring.style.height='52px';}
+});
+window.addEventListener('scroll',function(){document.getElementById('nav').style.boxShadow=window.scrollY>40?'0 4px 24px rgba(13,45,107,.15)':'0 2px 20px rgba(13,45,107,.06)';});
+var burger=document.getElementById('burger'),nl=document.getElementById('nl');
+burger.addEventListener('click',function(){nl.classList.toggle('open');});
+nl.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nl.classList.remove('open');});});
+function toggleFaq(el){var item=el.parentElement;var isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});if(!isOpen)item.classList.add('open');}
+var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});},{threshold:0.08});
+document.querySelectorAll('.evcard,.rcard,.asc,.pillar,.hcard,.ci,.faq-item').forEach(function(el){el.style.opacity='0';el.style.transform='translateY(24px)';el.style.transition='opacity .6s ease,transform .6s ease';io.observe(el);});
+</script>
+</body>
+</html>
